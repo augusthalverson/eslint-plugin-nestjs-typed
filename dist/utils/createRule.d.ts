@@ -1,0 +1,2 @@
+import { ESLintUtils } from "@typescript-eslint/experimental-utils";
+export declare const createRule: <TOptions extends readonly unknown[], TMessageIds extends string, TRuleListener extends import("@typescript-eslint/experimental-utils/dist/ts-eslint/Rule").RuleListener = import("@typescript-eslint/experimental-utils/dist/ts-eslint/Rule").RuleListener>({ name, meta, ...rule }: Readonly<ESLintUtils.RuleWithMetaAndName<TOptions, TMessageIds, TRuleListener>>) => import("@typescript-eslint/experimental-utils/dist/ts-eslint/Rule").RuleModule<TMessageIds, TOptions, TRuleListener>;
