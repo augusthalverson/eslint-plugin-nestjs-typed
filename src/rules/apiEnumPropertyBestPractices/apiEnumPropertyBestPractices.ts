@@ -1,4 +1,3 @@
-import {getParserServices} from "@typescript-eslint/experimental-utils/dist/eslint-utils";
 import {TSESTree} from "@typescript-eslint/types";
 import {createRule} from "../../utils/createRule";
 import {typedTokenHelpers} from "../../utils/typedTokenHelpers";
@@ -110,38 +109,12 @@ const rule = createRule({
     defaultOptions: [],
 
     create(context) {
-        //const globalScope = context.getScope();
-        const parserServices = getParserServices(context);
-        const typeChecker = parserServices.program.getTypeChecker();
-
         return {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
-            PropertyDefinition(node: TSESTree.Node): void {
-                const mappedNode =
-                    parserServices.esTreeNodeToTSNodeMap.get(node);
-                const objectType = typeChecker.getTypeAtLocation(mappedNode);
-                const isEnumType = typedTokenHelpers.isEnumType(objectType);
-
-                const result = hasEnumSpecifiedCorrectly(node, isEnumType);
-
-                if (result.needsEnumNameAdded) {
-                    context.report({
-                        node: node,
-                        messageId: "needsEnumNameAdded",
-                    });
-                }
-                if (result.needsTypeRemoved) {
-                    context.report({
-                        node: node,
-                        messageId: "needsTypeRemoved",
-                    });
-                }
-                if (result.needsEnumNameToMatchEnumType) {
-                    context.report({
-                        node: node,
-                        messageId: "enumNameShouldMatchType",
-                    });
-                }
+            VariableDeclaration(node: TSESTree.Node): void {
+            context.report({
+                node: node,
+                messageId: "enumNameShouldMatchType",
+            });
             },
         };
     },
